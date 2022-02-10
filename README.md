@@ -1,5 +1,6 @@
 # web-book
-web epub reader without server\n
-usage:\n
-npm install\n
-npm start\n
+web epub reader without server
+
+usage: 
+
+1.npm install   2.npm start
