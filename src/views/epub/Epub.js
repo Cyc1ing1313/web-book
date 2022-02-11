@@ -1,16 +1,16 @@
-import { Upload, message, Button, List, Typography } from "antd";
+import { Upload, message, Button, List, Affix } from "antd";
+import { ImportOutlined } from "@ant-design/icons";
 import { UploadOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState, useReducer } from "react";
 import { ReactReader } from "../../modules";
 import {
   openDB,
-  addData,
   getDataByKey,
   updateDB,
   cursorGetData,
   deleteDB,
 } from "../../db";
-import epubcfi from "epubjs/lib/epubcfi";
+import { Link } from "react-router-dom";
 export default function EpubReadView() {
   const [location, setLocation] = useState(null);
   const [file, setFile] = useState(null);
@@ -23,16 +23,6 @@ export default function EpubReadView() {
         type: "set",
         id: await cursorGetData(db.current, "books"),
       });
-      // let epub = await getDataByKey(db.current, "books", "epub");
-      // if (epub === undefined) {
-      //   return;
-      // }
-      // if (epub.page !== undefined) {
-      //   setLocation(epub.page);
-      // }
-      // if (epub.data !== undefined) {
-      //   setFile(epub.data);
-      // }
     };
     fetchData();
   }, []);
@@ -129,11 +119,32 @@ export default function EpubReadView() {
         </div>
       )}
       {file != null && (
-        <ReactReader
-          location={location}
-          locationChanged={locationChanged}
-          url={file}
-        />
+        <div style={{height:"100vh"}}>
+          <ReactReader
+            location={location}
+            locationChanged={locationChanged}
+            url={file}
+          />
+          <Affix
+            style={{
+              position: "absolute",
+              top: "90vh",
+              left: "95vw",
+              zIndex: "999",
+            }}
+          >
+            <Button
+              type="default"
+              shape="circle"
+              size="large"
+              onClick={() => {
+                setFile(null);
+              }}
+            >
+              <ImportOutlined />
+            </Button>
+          </Affix>
+        </div>
       )}
     </div>
   );
