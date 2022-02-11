@@ -93,7 +93,7 @@ export default function EpubReadView() {
           <Upload
             accept="application/epub+zip"
             beforeUpload={(file) => {
-              if (file.type !== "application/epub+zip") {
+              if (!file.type.startsWith("application/epub")) {
                 message.error("Only epub files are allowed");
                 return false;
               }
